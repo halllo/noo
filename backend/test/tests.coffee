@@ -17,11 +17,11 @@ describe "app", ->
 			.end (err, res) -> errorOrDone(done, err)
 
 	it "gets rates of thing", (done) ->
-		get '/thing' 
+		get '/rates/thing' 
 			.expect 'no rates for "thing"'
 			.end (err, res) -> errorOrDone(done, err)
 
 	it "rates a thing", (done) ->
-		put '/thing' 
+		put '/rates/thing' 
 			.expect 'rated "thing"'
 			.end (err, res) -> errorOrDone(done, err)
