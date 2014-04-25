@@ -5,7 +5,7 @@
         "author": "Manuel Naujoks",
         "dependencies": {
                 "express" : "3.x.x",
-                "mongodb" : "1.x.x"
+                "mongoose" : "3.x.x"
         },
         "devDependencies": {
                 "mocha" : "1.x.x",

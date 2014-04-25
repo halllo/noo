@@ -16,12 +16,17 @@ describe "app", ->
 			.expect 'like or dislike'
 			.end (err, res) -> errorOrDone(done, err)
 
-	it "gets rates of thing", (done) ->
+	it "returns all rates", (done) ->
+		get '/rates' 
+			.expect 'list of all reates, but no rates yes'
+			.end (err, res) -> errorOrDone(done, err)
+
+	it "gets rates of 'thing'", (done) ->
 		get '/rates/thing' 
 			.expect 'no rates for "thing"'
 			.end (err, res) -> errorOrDone(done, err)
 
-	it "rates a thing", (done) ->
+	it "rates a 'thing'", (done) ->
 		put '/rates/thing' 
 			.expect 'rated "thing"'
 			.end (err, res) -> errorOrDone(done, err)
