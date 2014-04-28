@@ -22,8 +22,13 @@ Ratings.prototype = {
     });
   },
 
-  rate: function(name, callback) {
-    //update!
+  rateUp: function(name, callback) {
+    Rating.findOneAndUpdate(
+      { name: 'borne' }, 
+      { $inc: { ups: 1 }}, 
+      function ratingsUpdated(err, updated) {
+        callback(updated));
+      });
   }
   
 }

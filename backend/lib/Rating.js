@@ -4,7 +4,8 @@ var mongoose = require('mongoose')
 var RatingSchema = new Schema({
   
     name      : String
-  , rates  	  : Number
+  , ups  	  : Number
+  , downs  	  : Number
   
 });
 

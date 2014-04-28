@@ -1,7 +1,10 @@
 var express = require('express');
 var app = express();
 
-var business = require('./lib/business');
+var mongodb = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/meetappprototype'
+
+var Business = require('./lib/business');
+var business = new Business(mongodb);
 
 app.get('/', function(req, res){
 	var response = res;

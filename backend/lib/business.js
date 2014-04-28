@@ -1,22 +1,23 @@
 var Ratings = require('./Ratings');
 
-var mongodb = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/meetappprototype'
-var ratings = new Ratings(mongodb);
+module.exports = Business;
 
-
-var getRates = function(name) {
-	return 'no rates for "' + name + '"';
+function Business(mongodb) {
+	this.ratings = new Ratings(mongodb);
 }
 
-var getAllRates = function() {
-	return 'list of all reates, but no rates yes';
+Business.prototype = {
+
+	getRates: function(name) {
+		return 'no rates for "' + name + '"';
+	},
+
+	getAllRates: function() {
+		return 'list of all reates, but no rates yes';
+	},
+
+	rate: function(name) {
+		return 'rated "' + name + '"';
+	}
+
 }
-
-var rate = function(name) {
-	return 'rated "' + name + '"';
-}
-
-
-module.exports.getRates = getRates;
-module.exports.getAllRates = getAllRates;
-module.exports.rate = rate;
