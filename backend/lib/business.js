@@ -16,8 +16,8 @@ Business.prototype = {
 		return 'list of all reates, but no rates yes';
 	},
 
-	rate: function(name) {
-		return 'rated "' + name + '"';
+	rate: function(name, rating) {
+		return rating.upOrDown + ' rated "' + name + '"';
 	}
 
 }

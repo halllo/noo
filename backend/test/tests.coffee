@@ -26,7 +26,14 @@ describe "app", ->
 			.expect 'no rates for "thing"'
 			.end (err, res) -> errorOrDone(done, err)
 
-	it "rates a 'thing'", (done) ->
+	it "rates a 'thing' up", (done) ->
 		put '/rates/thing' 
-			.expect 'rated "thing"'
+			.send { "upOrDown": "up" } 
+			.expect 'up rated "thing"'
+			.end (err, res) -> errorOrDone(done, err)
+
+	it "rates a 'thing' down", (done) ->
+		put '/rates/thing' 
+			.send { "upOrDown": "down" } 
+			.expect 'down rated "thing"'
 			.end (err, res) -> errorOrDone(done, err)
