@@ -8,16 +8,21 @@ function Business(mongodb) {
 
 Business.prototype = {
 
-	getRates: function(name) {
-		return 'no rates for "' + name + '"';
+	getRates: function(name, callback) {
+		this.ratings.of(name, callback);
 	},
 
-	getAllRates: function() {
-		return 'list of all reates, but no rates yes';
+	getAllRates: function(callback) {
+		this.ratings.all(callback);
 	},
 
-	rate: function(name, rating) {
-		return rating.upOrDown + ' rated "' + name + '"';
+	rate: function(name, rating, callback) {
+		if (rating.upOrDown === 'up')
+			this.ratings.rateUp(name, callback);
+		else if (rating.upOrDown === 'down')
+			this.ratings.rateDown(name, callback);
+		else
+			callback("not a valid rating");
 	}
 
 }

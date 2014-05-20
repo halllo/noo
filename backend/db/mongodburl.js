@@ -28,7 +28,7 @@ var generate_mongo_url = function(obj){
 
 var generate = function() {
     //return generate_mongo_url(mongo);
-    return 'mongodb://localhost/meetappprototype';
+    return 'mongodb://localhost/noo';
 }
 
 module.exports.generate = generate;

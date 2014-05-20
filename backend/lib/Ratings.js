@@ -10,10 +10,12 @@ function Ratings(connection) {
 
 Ratings.prototype = {
   
-  of: function(filter, callback) {
-    Rating.find(filter, function ratingsFound(err, items) {
-      callback(err, items);
-    });
+  of: function(name, callback) {
+    Rating.find(
+      { name: name },
+      function ratingsFound(err, items) {
+        callback(err, items);
+      });
   },
 
   all: function(callback) {
@@ -26,6 +28,7 @@ Ratings.prototype = {
     Rating.findOneAndUpdate(
       { name: name }, 
       { $inc: { ups: 1 }}, 
+      { upsert: true, "new": false },
       function ratingsUpdated(err, updated) {
         callback(err, updated);
       });
@@ -34,7 +37,8 @@ Ratings.prototype = {
   rateDown: function(name, callback) {
     Rating.findOneAndUpdate(
       { name: name }, 
-      { $inc: { downs: 1 }}, 
+      { $inc: { downs: 1 }},
+      { upsert: true, "new": false },
       function ratingsUpdated(err, updated) {
         callback(err, updated);
       });

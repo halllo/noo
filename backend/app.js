@@ -11,7 +11,11 @@ var business = new Business(mongourl);
 var port = process.env.VMC_APP_PORT || process.env.PORT || 1337
 app.configure(function(){
 	app.use(express.static(__dirname + '/public'));
-	app.use(express.bodyParser());
+
+	console.log("TODO: app.use(express.bodyParser()); is vulnerable to a resource depletion attack")
+	//http://andrewkelley.me/post/do-not-use-bodyparser-with-express-js.html
+
+	app.use(express.json());
 	app.use(app.router);
 });
 app.listen(port);
@@ -21,20 +25,38 @@ app.listen(port);
 app.get('/rates', function(req, res){
 	var response = res;
 	var name = req.params.name;
-	response.send(business.getAllRates());
+	business.getAllRates(function(err, items) {
+		if (err) 
+			response.send(500, err);
+		else 
+			response.send(items);
+	});
 });
 
 app.get('/rates/:name', function(req, res){
 	var response = res;
 	var name = req.params.name;
-	response.send(business.getRates(name));
+	business.getRates(name, function(err, items) {
+		if (err) 
+			response.send(500, err);
+		else 
+			response.send(items);
+	});
 });
 
 app.put('/rates/:name', function(req, res){
 	var response = res;
 	var name = req.params.name;
 	var body = req.body;
-	response.send(business.rate(name, body));
+	business.rate(name, body, function(err, updated) {
+		if (err) 
+			response.send(500, err);
+		else 
+		{
+			console.log("TODO: why dont i get the upserted element back?")
+			response.send(updated);
+		}
+	});
 });
 
 
