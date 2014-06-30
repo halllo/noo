@@ -42,20 +42,40 @@ describe "Backend", ->
 				.expect 'not a valid rating'
 				.end (err, res) -> errorOrDone(done, err)
 
-		it "rates a 'thing' invalid does not work", (done) ->
+		it "rates a 'thing' invalid does not work 1", (done) ->
 			put '/rates/thing' 
 				.send { "upOrDown": "nah" } 
+				.expect 'not a valid rating'
+				.end (err, res) -> errorOrDone(done, err)
+
+		it "rates a 'thing' invalid does not work 2", (done) ->
+			put '/rates/thing' 
+				.send { "blkafd": "nah" } 
 				.expect 'not a valid rating'
 				.end (err, res) -> errorOrDone(done, err)
 
 		it "rates a 'thing' up", (done) ->
 			put '/rates/thing' 
 				.send { "upOrDown": "up" } 
-				.expect 'up rated "thing"'
+				.expect { "name": "thing", "ups": 1, "downs": 0 }
 				.end (err, res) -> errorOrDone(done, err)
 
 		it "rates a 'thing' down", (done) ->
 			put '/rates/thing' 
 				.send { "upOrDown": "down" } 
-				.expect 'down rated "thing"'
+				.expect { "name": "thing", "ups": 0, "downs": 1 }
+				.end (err, res) -> errorOrDone(done, err)
+
+		it "rates a 'thing' up twice and down once", (done) ->
+			put '/rates/thing' 
+				.send { "upOrDown": "up" } 
+				.end (err, res) -> 
+			put '/rates/thing' 
+				.send { "upOrDown": "up" } 
+				.end (err, res) -> 
+			put '/rates/thing' 
+				.send { "upOrDown": "down" } 
+				.end (err, res) -> 
+			get '/rates/thing' 
+				.expect [{ "name": "thing", "ups": 2, "downs": 1 }]
 				.end (err, res) -> errorOrDone(done, err)

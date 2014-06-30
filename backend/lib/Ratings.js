@@ -28,7 +28,7 @@ Ratings.prototype = {
     Rating.findOneAndUpdate(
       { name: name }, 
       { $inc: { ups: 1 }}, 
-      { upsert: true, "new": false },
+      { upsert: true },
       function ratingsUpdated(err, updated) {
         callback(err, updated);
       });
@@ -38,7 +38,7 @@ Ratings.prototype = {
     Rating.findOneAndUpdate(
       { name: name }, 
       { $inc: { downs: 1 }},
-      { upsert: true, "new": false },
+      { upsert: true },
       function ratingsUpdated(err, updated) {
         callback(err, updated);
       });

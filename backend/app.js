@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var _ = require('underscore');
 
 var mongourl = require('./db/mongodburl').generate();
 var Business = require('./lib/business');
@@ -11,10 +12,6 @@ var business = new Business(mongourl);
 var port = process.env.VMC_APP_PORT || process.env.PORT || 1337
 app.configure(function(){
 	app.use(express.static(__dirname + '/public'));
-
-	console.log("TODO: app.use(express.bodyParser()); is vulnerable to a resource depletion attack")
-	//http://andrewkelley.me/post/do-not-use-bodyparser-with-express-js.html
-
 	app.use(express.json());
 	app.use(app.router);
 });
@@ -29,7 +26,7 @@ app.get('/rates', function(req, res){
 		if (err) 
 			response.send(500, err);
 		else 
-			response.send(items);
+			response.send(_.map(items, createViewModel));
 	});
 });
 
@@ -40,7 +37,7 @@ app.get('/rates/:name', function(req, res){
 		if (err) 
 			response.send(500, err);
 		else 
-			response.send(items);
+			response.send(_.map(items, createViewModel));
 	});
 });
 
@@ -52,12 +49,18 @@ app.put('/rates/:name', function(req, res){
 		if (err) 
 			response.send(500, err);
 		else 
-		{
-			console.log("TODO: why dont i get the upserted element back?")
-			response.send(updated);
-		}
+			response.send(createViewModel(updated));
 	});
 });
+
+
+var createViewModel = function(item) {
+	return {
+		name: item.name,
+		ups: item.ups || 0,
+		downs: item.downs || 0
+	};
+}
 
 
 
