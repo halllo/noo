@@ -1,1 +1,28 @@
-like or dislike
+<!doctype html>
+<html ng-app="ratingsApp">
+  
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.16/angular.min.js"></script>
+    <script src="ratings.js"></script>
+    <link rel="stylesheet" href="ratings.css">
+  </head>
+
+  <body>
+  	<h2>Ratings</h2>
+  	<div ng-controller="RatingsController">
+	    
+	    <h3>new</h3>
+	    <form ng-submit="addRating()">
+    		<input type="text" ng-model="newRatingText" size="30" placeholder="add thing to rate here">
+        	<input class="btn-primary" type="submit" value="rate">
+    	</form>
+
+    	<h3>all {{ratingsCount()}} ratings</h3>
+	    <ul class="unstyled">
+	        <li ng-repeat="rating in ratings">
+	          <span>{{rating.n}} [ {{rating.u}} ups, {{rating.d}} downs ]</span>
+	        </li>
+	    </ul>
+    </div>
+  </body>
+</html>

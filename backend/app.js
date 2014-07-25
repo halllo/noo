@@ -56,9 +56,9 @@ app.put('/rates/:name', function(req, res){
 
 var createViewModel = function(item) {
 	return {
-		name: item.name,
-		ups: item.ups || 0,
-		downs: item.downs || 0
+		n: item.name,
+		u: item.ups || 0,
+		d: item.downs || 0
 	};
 }
 

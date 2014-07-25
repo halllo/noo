@@ -57,13 +57,13 @@ describe "Backend", ->
 		it "rates a 'thing' up", (done) ->
 			put '/rates/thing' 
 				.send { "upOrDown": "up" } 
-				.expect { "name": "thing", "ups": 1, "downs": 0 }
+				.expect { "n": "thing", "u": 1, "d": 0 }
 				.end (err, res) -> errorOrDone(done, err)
 
 		it "rates a 'thing' down", (done) ->
 			put '/rates/thing' 
 				.send { "upOrDown": "down" } 
-				.expect { "name": "thing", "ups": 0, "downs": 1 }
+				.expect { "n": "thing", "u": 0, "d": 1 }
 				.end (err, res) -> errorOrDone(done, err)
 
 		it "rates a 'thing' up twice and down once", (done) ->
@@ -77,5 +77,5 @@ describe "Backend", ->
 				.send { "upOrDown": "down" } 
 				.end (err, res) -> 
 			get '/rates/thing' 
-				.expect [{ "name": "thing", "ups": 2, "downs": 1 }]
+				.expect [{ "n": "thing", "u": 2, "d": 1 }]
 				.end (err, res) -> errorOrDone(done, err)
