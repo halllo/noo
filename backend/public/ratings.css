@@ -1,4 +1,9 @@
+body {
+  padding: 30px;
+}
+
 .done-true {
   text-decoration: line-through;
   color: grey;
 }
+
